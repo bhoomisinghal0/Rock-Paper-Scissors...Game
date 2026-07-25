@@ -5,36 +5,47 @@
     <title>
         Rock Paper Scissors game
     </title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <p>Rock Paper Scissors</p>
-    <button onclick="
+    <p class="heading"><u>Rock Paper Scissors</u></p>
+    <div class="details">
+    <button class="move-button"  onclick="
             setting_move();
             output_game('rock');
 
-        ">Rock</button>
-    <button onclick="
+        "><img class="icons" src="icons/rock-emoji.png"></button>
+    <button class="move-button" onclick="
             setting_move();
             output_game('paper');
 
-    ">Paper</button>
-    <button onclick="
+    "><img class="icons" src="icons/paper-emoji.png"></button>
+    <button class="move-button" onclick="
             setting_move();
             output_game('scissors');
        
-    ">Scissors</button>
-    <p class="js-status"></p>
+    "><img class="icons" src="icons/scissors-emoji.png"></button>
+    <div class="result-info">
+    <p class="js-status">
+       
+    </p>
     <p class="js-move"></p>
     <p class="js-score"></p>
-    <button onclick="
+    <button class="res-but" onclick="
     score.Win=0;
     score.Tie=0;
     score.Lose=0;
+    result=null;
     localStorage.removeItem('score');
-    updateScore();
+    document.querySelector('.js-move').innerHTML='';
+    document.querySelector('.js-status').innerHTML=`'Game is Reset'`;
+     document.querySelector('.js-score').innerHTML=`Win:${score.Win}  Tie:${score.Tie}  Lose:${score.Lose}`;
+
     //to remove previous stored values in localStorage
     ">Reset Score</button>
+    </div>
+    </div>
 
     <script>
         /*take random value between 0 and 1
@@ -112,11 +123,26 @@
             
             localStorage.setItem('score', JSON.stringify(score));
             updateScore();
-            document.querySelector('.js-move').innerHTML=`Your Move- ${player_move}\n. Computer's Move -${computerMove}`;
-            }
+            document.querySelector('.js-move').innerHTML= `You:
+        <img class="live-move" src="icons/${player_move}-emoji.png">
+        Computer:
+        <img class="live-move" src="icons/${computerMove}-emoji.png">
+            `;}
         
         function updateScore(){
             document.querySelector('.js-status').innerHTML=`${result}`;
+            if (result=='You Win'){
+                document.querySelector('.js-status').style.color='green';
+            }
+            else if(result=='Tie'){
+                document.querySelector('.js-status').style.color='yellow';
+            }
+            else if(result=='You Lose'){
+                document.querySelector('.js-status').style.color='red';
+            }
+            else if(result==null){
+                document.querySelector('.js-status').style.color='white';
+            }
             //document.querySelector('.js-move').innerHTML=`Your Move- ${player_move}\n. Computer's Move -${computerMove}`;
             document.querySelector('.js-score').innerHTML=`Win:${score.Win}  Tie:${score.Tie}  Lose:${score.Lose}`;
             //will not work cause player_move & computerMove are out of scope,Thus java throes a reference error.
